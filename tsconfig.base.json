@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@front/libs/web/shell/feature": ["libs/web/shell/feature/src/index.ts"]
+      "@front/libs/web/shell/feature": ["libs/web/shell/feature/src/index.ts"],
+      "@front/libs/web/shell/ui/header": [
+        "libs/web/shell/ui/header/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
