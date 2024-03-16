@@ -12,9 +12,9 @@ import { HeaderComponent } from '@front/libs/web/shell/ui/header';
     <div class="min-h-screen flex flex-col">
       <gt-header />
 
-      <div class="flex-grow">
+      <main class="flex-1">
         <router-outlet />
-      </div>
+      </main>
 
       <gt-footer />
     </div>
