@@ -3,7 +3,7 @@
   "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/web/shell/ui/header/src",
   "prefix": "gt",
-  "tags": ["scope:web", "scope:ui"],
+  "tags": ["scope:web", "type:ui"],
   "projectType": "library",
   "targets": {
     "test": {
