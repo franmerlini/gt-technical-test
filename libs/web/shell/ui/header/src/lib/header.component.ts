@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'gt-header',
   standalone: true,
   imports: [CommonModule],
-  template: `<p>header works!</p>`,
+  template: `<div class="navbar bg-primary text-primary-content"></div>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {}
