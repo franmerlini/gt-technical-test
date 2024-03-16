@@ -1,3 +1,14 @@
 import { Route } from '@angular/router';
 
-export const webShellRoutes: Route[] = [];
+import { LayoutComponent } from '@front/libs/web/shell/ui/layout';
+
+export const webShellRoutes: Route[] = [
+  {
+    path: '',
+    component: LayoutComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
+];
