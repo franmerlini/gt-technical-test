@@ -1,1 +1,1 @@
-export * from './lib/web-shell-ui-footer.component';
+export * from './lib/footer.component';
