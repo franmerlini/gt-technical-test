@@ -9,11 +9,13 @@ import { HeaderComponent } from '@front/libs/web/shell/ui/header';
   standalone: true,
   imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent],
   template: `
-    <div class="min-h-screen flex flex-col">
+    <div class="h-screen flex flex-col">
       <gt-header />
 
-      <main class="flex-1">
-        <router-outlet />
+      <main class="flex-1 flex justify-center py-8">
+        <div class="container">
+          <router-outlet />
+        </div>
       </main>
 
       <gt-footer />
