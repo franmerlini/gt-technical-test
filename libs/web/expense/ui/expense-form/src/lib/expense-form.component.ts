@@ -17,6 +17,7 @@ import {
   CreateExpenseDto,
   Expense,
   SelectItem,
+  UpdateExpenseDto,
 } from '@gt-technical-test/libs/common';
 
 type ExpenseForm = {
@@ -98,11 +99,11 @@ type ExpenseForm = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpenseFormComponent {
-  @Input() expense: Expense | undefined;
   @Input({ required: true }) categoryList: SelectItem[] | undefined;
+  @Input() expense: Expense | undefined;
 
   @Output() add = new EventEmitter<CreateExpenseDto>();
-  @Output() update = new EventEmitter<Expense>();
+  @Output() update = new EventEmitter<UpdateExpenseDto>();
   @Output() formError = new EventEmitter<string>();
 
   #fb = inject(NonNullableFormBuilder);
