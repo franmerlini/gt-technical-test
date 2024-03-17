@@ -37,6 +37,9 @@
       "@gt-technical-test/libs/web/home/ui/badge-list": [
         "libs/web/home/ui/badge-list/src/index.ts"
       ],
+      "@gt-technical-test/libs/web/shared/data-access/api": [
+        "libs/web/shared/data-access/api/src/index.ts"
+      ],
       "@gt-technical-test/libs/web/shell/feature": [
         "libs/web/shell/feature/src/index.ts"
       ],
