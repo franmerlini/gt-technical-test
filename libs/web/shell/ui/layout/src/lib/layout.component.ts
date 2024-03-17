@@ -12,7 +12,7 @@ import { HeaderComponent } from '@gt-technical-test/libs/web/shell/ui/header';
     <div class="h-screen flex flex-col">
       <gt-header />
 
-      <main class="flex-1 flex justify-center py-8">
+      <main class="flex-1 flex justify-center py-8 px-4">
         <div class="container">
           <router-outlet />
         </div>
