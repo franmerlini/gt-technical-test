@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import { Observable, delay, of } from 'rxjs';
 
 import {
   CreateExpenseDto,
@@ -35,10 +35,11 @@ export class ExpenseService {
       },
     },
   ];
+  #lastId = 2;
 
   getExpenses(): Observable<Expense[]> {
     // return this.#http.get<Expense[]>('/api/expenses');
-    return of(this.#expenses);
+    return of(this.#expenses).pipe(delay(1000));
   }
 
   getExpense(expenseId: number): Observable<Expense | undefined> {
@@ -48,17 +49,12 @@ export class ExpenseService {
 
   createExpense(expense: CreateExpenseDto): Observable<Expense> {
     // return this.#http.post<Expense>('/api/expenses', expense);
-    let lastId = 0;
 
-    this.#expenses.forEach(({ id }) => {
-      if (id > lastId) {
-        lastId = id;
-      }
-    });
+    const newExpense: Expense = { id: this.#lastId++, ...expense };
 
-    this.#expenses.push({ id: lastId + 1, ...expense });
+    this.#expenses = [...this.#expenses, newExpense];
 
-    return of(this.#expenses[this.#expenses.length - 1]);
+    return of(this.#expenses[this.#expenses.length - 1]).pipe(delay(1000));
   }
 
   updateExpense(
@@ -68,9 +64,11 @@ export class ExpenseService {
     // return this.#http.put<Expense>(`/api/expenses/${expenseId}`, expense);
     const index = this.#expenses.findIndex(({ id }) => id === expenseId);
 
-    this.#expenses[index] = { ...this.#expenses[index], ...expense };
+    this.#expenses = this.#expenses.map((e, i) =>
+      i === index ? { ...e, ...expense } : e
+    );
 
-    return of(this.#expenses[index]);
+    return of(this.#expenses[index]).pipe(delay(1000));
   }
 
   deleteExpense(expenseId: number): Observable<number> {
@@ -79,6 +77,6 @@ export class ExpenseService {
 
     this.#expenses.splice(index, 1);
 
-    return of(expenseId);
+    return of(expenseId).pipe(delay(1000));
   }
 }
