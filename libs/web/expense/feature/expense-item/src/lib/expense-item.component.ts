@@ -26,6 +26,7 @@ import { ExpenseFormComponent } from '@gt-technical-test/libs/web/expense/ui/exp
       <gt-expense-form
         [categoryList]="data.categories"
         [expense]="data.expense"
+        [loading]="data.loading"
         (add)="onAdd($event)"
         (update)="onUpdate($event)"
         (formError)="onFormError($event)"
@@ -40,8 +41,9 @@ export class ExpenseItemComponent {
 
   categories$ = this.#store.select(CategoryFeature.selectAll);
   expense$ = this.#store.select(ExpenseFeature.selectActive);
-  data$ = combineLatest([this.categories$, this.expense$]).pipe(
-    map(([categories, expense]) => ({ categories, expense }))
+  loading$ = this.#store.select(ExpenseFeature.selectLoading);
+  data$ = combineLatest([this.categories$, this.expense$, this.loading$]).pipe(
+    map(([categories, expense, loading]) => ({ categories, expense, loading }))
   );
 
   onAdd(expense: CreateExpenseDto) {
