@@ -1,50 +1,55 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+
+import { Store } from '@ngrx/store';
+
+import { combineLatest, map } from 'rxjs';
 
 import {
   CreateExpenseDto,
-  Expense,
-  SelectItem,
+  UpdateExpenseDto,
 } from '@gt-technical-test/libs/common';
 import { ExpenseFormComponent } from '@gt-technical-test/libs/web/expense/ui/expense-form';
+import {
+  CategoryFeature,
+  ExpenseActions,
+  ExpenseFeature,
+} from '@gt-technical-test/libs/web/shared/data-access/store';
 
 @Component({
   selector: 'gt-expense-item',
   standalone: true,
-  imports: [ExpenseFormComponent],
+  imports: [ExpenseFormComponent, AsyncPipe],
   template: `
     <div>
+      @if(data$ | async; as data ) {
       <gt-expense-form
-        [categoryList]="categories"
+        [categoryList]="data.categories"
+        [expense]="data.expense"
         (add)="onAdd($event)"
         (update)="onUpdate($event)"
         (formError)="onFormError($event)"
       ></gt-expense-form>
+      }
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpenseItemComponent {
-  categories: SelectItem[] = [
-    {
-      id: 1,
-      name: 'Category 1',
-    },
-    {
-      id: 2,
-      name: 'Category 2',
-    },
-    {
-      id: 3,
-      name: 'Category 3',
-    },
-  ];
+  #store = inject(Store);
+
+  categories$ = this.#store.select(CategoryFeature.selectAll);
+  expense$ = this.#store.select(ExpenseFeature.selectActive);
+  data$ = combineLatest([this.categories$, this.expense$]).pipe(
+    map(([categories, expense]) => ({ categories, expense }))
+  );
 
   onAdd(expense: CreateExpenseDto) {
-    console.log(expense);
+    this.#store.dispatch(ExpenseActions.createExpense({ expense }));
   }
 
-  onUpdate(expense: Expense) {
-    console.log(expense);
+  onUpdate(expense: UpdateExpenseDto) {
+    this.#store.dispatch(ExpenseActions.updateExpense({ expense }));
   }
 
   onFormError(error: string) {
