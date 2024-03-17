@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { Badge } from '@gt-technical-test/libs/common';
 import { BadgeListComponent } from '@gt-technical-test/libs/web/home/ui/badge-list';
 
 @Component({
@@ -26,7 +27,7 @@ import { BadgeListComponent } from '@gt-technical-test/libs/web/home/ui/badge-li
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
-  badges = [
+  badges: Badge[] = [
     {
       id: 1,
       label: 'Angular',

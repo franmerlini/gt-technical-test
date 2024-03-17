@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
+import { Badge } from '@gt-technical-test/libs/common';
+
 @Component({
   selector: 'gt-badge-list',
   standalone: true,
@@ -17,5 +19,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BadgeListComponent {
-  @Input({ required: true }) badges: any[] = [];
+  @Input({ required: true }) badges: Badge[] = [];
 }
