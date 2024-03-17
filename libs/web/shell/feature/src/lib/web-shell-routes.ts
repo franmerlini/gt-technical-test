@@ -14,6 +14,13 @@ export const webShellRoutes: Route[] = [
             (m) => m.HomeComponent
           ),
       },
+      {
+        path: 'expenses',
+        loadComponent: () =>
+          import('@gt-technical-test/libs/web/expense/feature/expenses').then(
+            (m) => m.ExpensesComponent
+          ),
+      },
     ],
   },
   {
