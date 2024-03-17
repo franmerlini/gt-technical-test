@@ -3,8 +3,13 @@ import { Route } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
 
-import { ExpenseService } from '@gt-technical-test/libs/web/shared/data-access/api';
 import {
+  CategoryService,
+  ExpenseService,
+} from '@gt-technical-test/libs/web/shared/data-access/api';
+import {
+  CategoryEffects,
+  CategoryFeature,
   ExpenseEffects,
   ExpenseFeature,
 } from '@gt-technical-test/libs/web/shared/data-access/store';
@@ -32,6 +37,9 @@ export const WEB_ROUTES: Route[] = [
           ExpenseService,
           provideState(ExpenseFeature),
           provideEffects(ExpenseEffects),
+          CategoryService,
+          provideState(CategoryFeature),
+          provideEffects(CategoryEffects),
         ],
       },
     ],
