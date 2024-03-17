@@ -1,13 +1,20 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { Expense } from '@gt-technical-test/libs/common';
+import { Store } from '@ngrx/store';
+
 import { ExpensesTableComponent } from '@gt-technical-test/libs/web/expense/ui/expenses-table';
+import {
+  ExpenseActions,
+  ExpenseFeature,
+  RouterActions,
+} from '@gt-technical-test/libs/web/shared/data-access/store';
 
 @Component({
   selector: 'gt-expenses',
   standalone: true,
-  imports: [RouterLink, ExpensesTableComponent],
+  imports: [RouterLink, ExpensesTableComponent, AsyncPipe],
   template: `
     <div class="flex flex-col gap-4">
       <div class="flex justify-between items-center">
@@ -30,40 +37,27 @@ import { ExpensesTableComponent } from '@gt-technical-test/libs/web/expense/ui/e
         </button>
       </div>
 
+      @if(expenses$ | async; as expenses) {
       <gt-expenses-table
         [expenses]="expenses"
-        (edit)="onEdit()"
-        (delete)="onDelete()"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)"
       ></gt-expenses-table>
+      }
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpensesComponent {
-  expenses: Expense[] = [
-    {
-      id: 1,
-      name: 'Expense 1',
-      date: new Date(),
-      amount: 100,
-      category: {
-        id: 1,
-        name: 'Category 1',
-      },
-    },
-    {
-      id: 2,
-      name: 'Expense 2',
-      date: new Date(),
-      amount: 200,
-      category: {
-        id: 2,
-        name: 'Category 2',
-      },
-    },
-  ];
+  #store = inject(Store);
 
-  onEdit(): void {}
+  expenses$ = this.#store.select(ExpenseFeature.selectAll);
 
-  onDelete(): void {}
+  onEdit(expenseId: number): void {
+    this.#store.dispatch(RouterActions.go(['expenses', expenseId]));
+  }
+
+  onDelete(expenseId: number): void {
+    this.#store.dispatch(ExpenseActions.deleteExpense({ expenseId }));
+  }
 }
