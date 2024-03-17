@@ -91,7 +91,11 @@ type ExpenseForm = {
       <div class="flex justify-end gap-2">
         <button type="button" class="btn btn-secondary mt-4">Reset</button>
         <button type="submit" class="btn btn-primary mt-4">
+          @if(loading) {
+          <span class="loading loading-spinner"></span>
+          } @else {
           {{ expense ? 'Update' : 'Add' }}
+          }
         </button>
       </div>
     </form>
@@ -101,6 +105,7 @@ type ExpenseForm = {
 export class ExpenseFormComponent {
   @Input({ required: true }) categoryList: SelectItem[] | undefined;
   @Input() expense: Expense | undefined;
+  @Input() loading = false;
 
   @Output() add = new EventEmitter<CreateExpenseDto>();
   @Output() update = new EventEmitter<UpdateExpenseDto>();
@@ -123,6 +128,8 @@ export class ExpenseFormComponent {
   });
 
   onSubmit(): void {
+    if (this.loading) return;
+
     if (this.form.invalid) {
       this.formError.emit('Check the form fields and try again.');
       return;
