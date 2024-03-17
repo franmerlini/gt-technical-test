@@ -8,7 +8,7 @@ import { Observable, catchError, filter, of, switchMap, take, tap } from 'rxjs';
 import {
   CategoryActions,
   CategoryFeature,
-} from '@gt-technical-test/libs/web/shared/data-access/store';
+} from '@gt-technical-test/libs/web/expense/data-access/store';
 
 export const categoriesGuard = (): CanActivateFn => () => {
   const store = inject(Store);

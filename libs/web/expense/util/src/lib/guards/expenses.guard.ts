@@ -1,14 +1,13 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
+import {
+  ExpenseActions,
+  ExpenseFeature,
+} from '@gt-technical-test/libs/web/expense/data-access/store';
 
 import { Store } from '@ngrx/store';
 
 import { Observable, catchError, filter, of, switchMap, take, tap } from 'rxjs';
-
-import {
-  ExpenseActions,
-  ExpenseFeature,
-} from '@gt-technical-test/libs/web/shared/data-access/store';
 
 export const expensesGuard = (): CanActivateFn => () => {
   const store = inject(Store);

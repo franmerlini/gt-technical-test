@@ -4,15 +4,15 @@ import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
 
 import {
-  CategoryService,
-  ExpenseService,
-} from '@gt-technical-test/libs/web/shared/data-access/api';
-import {
   CategoryEffects,
   CategoryFeature,
   ExpenseEffects,
   ExpenseFeature,
-} from '@gt-technical-test/libs/web/shared/data-access/store';
+} from '@gt-technical-test/libs/web/expense/data-access/store';
+import {
+  CategoryService,
+  ExpenseService,
+} from '@gt-technical-test/libs/web/shared/data-access/api';
 import { LayoutComponent } from '@gt-technical-test/libs/web/shell/ui/layout';
 
 export const WEB_ROUTES: Route[] = [

@@ -9,12 +9,12 @@ import {
   CreateExpenseDto,
   UpdateExpenseDto,
 } from '@gt-technical-test/libs/common';
-import { ExpenseFormComponent } from '@gt-technical-test/libs/web/expense/ui/expense-form';
 import {
   CategoryFeature,
   ExpenseActions,
   ExpenseFeature,
-} from '@gt-technical-test/libs/web/shared/data-access/store';
+} from '@gt-technical-test/libs/web/expense/data-access/store';
+import { ExpenseFormComponent } from '@gt-technical-test/libs/web/expense/ui/expense-form';
 
 @Component({
   selector: 'gt-expense-item',

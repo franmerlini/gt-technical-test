@@ -2,7 +2,7 @@ import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 
 import { Expense } from '@gt-technical-test/libs/common';
-import { selectCurrentRoute } from '../root';
+import { selectCurrentRoute } from '@gt-technical-test/libs/web/shared/data-access/store';
 import { ExpenseActions } from './expense.actions';
 
 export const expenseFeatureKey = 'expense';
