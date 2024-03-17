@@ -3,6 +3,7 @@ import { Route } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
 
+import { ExpenseService } from '@gt-technical-test/libs/web/shared/data-access/api';
 import {
   ExpenseEffects,
   ExpenseFeature,
@@ -28,6 +29,7 @@ export const WEB_ROUTES: Route[] = [
             (m) => m.EXPENSE_ROUTES
           ),
         providers: [
+          ExpenseService,
           provideState(ExpenseFeature),
           provideEffects(ExpenseEffects),
         ],
