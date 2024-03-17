@@ -84,9 +84,14 @@ import { Expense } from '@gt-technical-test/libs/common';
 
         <tfoot>
           <tr>
-            <td colspan="5" class="text-right">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
               {{ calculateTotal(expenses) | currency : 'USD' }}
             </td>
+            <td></td>
           </tr>
         </tfoot>
       </table>
