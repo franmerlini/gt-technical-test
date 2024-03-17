@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 
 import { LayoutComponent } from '@gt-technical-test/libs/web/shell/ui/layout';
 
-export const webShellRoutes: Route[] = [
+export const WEB_ROUTES: Route[] = [
   {
     path: '',
     component: LayoutComponent,
@@ -16,9 +16,9 @@ export const webShellRoutes: Route[] = [
       },
       {
         path: 'expenses',
-        loadComponent: () =>
-          import('@gt-technical-test/libs/web/expense/feature/expenses').then(
-            (m) => m.ExpensesComponent
+        loadChildren: () =>
+          import('@gt-technical-test/libs/web/expense/feature/shell').then(
+            (m) => m.EXPENSE_ROUTES
           ),
       },
     ],
