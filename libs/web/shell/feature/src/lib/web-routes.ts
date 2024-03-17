@@ -1,5 +1,12 @@
 import { Route } from '@angular/router';
 
+import { provideEffects } from '@ngrx/effects';
+import { provideState } from '@ngrx/store';
+
+import {
+  ExpenseEffects,
+  ExpenseFeature,
+} from '@gt-technical-test/libs/web/shared/data-access/store';
 import { LayoutComponent } from '@gt-technical-test/libs/web/shell/ui/layout';
 
 export const WEB_ROUTES: Route[] = [
@@ -20,6 +27,10 @@ export const WEB_ROUTES: Route[] = [
           import('@gt-technical-test/libs/web/expense/feature/shell').then(
             (m) => m.EXPENSE_ROUTES
           ),
+        providers: [
+          provideState(ExpenseFeature),
+          provideEffects(ExpenseEffects),
+        ],
       },
     ],
   },
