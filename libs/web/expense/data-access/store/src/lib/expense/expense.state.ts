@@ -61,6 +61,27 @@ const reducer = createReducer(
     ...state,
     loading: false,
     error,
+  })),
+
+  on(ExpenseActions.updateExpense, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(ExpenseActions.updateExpenseSuccess, (state, { expense }) =>
+    adapter.updateOne(
+      { id: expense.id, changes: expense },
+      {
+        ...state,
+        loading: false,
+        error: null,
+      }
+    )
+  ),
+  on(ExpenseActions.updateExpenseFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
   }))
 );
 
@@ -72,7 +93,7 @@ export const ExpenseFeature = createFeature({
     selectActive: createSelector(
       selectExpenseState,
       selectCurrentRoute,
-      (state, route) => state.entities[route.params['id']]
+      (state, route) => state.entities[route?.params['id']] as Expense
     ),
   }),
 });

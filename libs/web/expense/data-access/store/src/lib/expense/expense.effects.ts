@@ -1,12 +1,14 @@
 import { inject } from '@angular/core';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 
-import { catchError, exhaustMap, map, of } from 'rxjs';
+import { catchError, exhaustMap, filter, map, of, withLatestFrom } from 'rxjs';
 
 import { ExpenseService } from '@gt-technical-test/libs/web/shared/data-access/api';
 import { RouterActions } from '@gt-technical-test/libs/web/shared/data-access/store';
 import { ExpenseActions } from './expense.actions';
+import { ExpenseFeature } from './expense.state';
 
 const loadExpenses$ = createEffect(
   (actions$ = inject(Actions), expenseService = inject(ExpenseService)) =>
@@ -59,8 +61,47 @@ const createExpenseSuccess$ = createEffect(
   { functional: true }
 );
 
+const updateExpense$ = createEffect(
+  (
+    actions$ = inject(Actions),
+    expenseService = inject(ExpenseService),
+    store = inject(Store)
+  ) =>
+    actions$.pipe(
+      ofType(ExpenseActions.updateExpense),
+      withLatestFrom(store.select(ExpenseFeature.selectActive)),
+      filter(([, { id }]) => !!id),
+      exhaustMap(([{ expense }, { id }]) =>
+        expenseService.updateExpense(id, expense).pipe(
+          map((updatedExpense) =>
+            ExpenseActions.updateExpenseSuccess({ expense: updatedExpense })
+          ),
+          catchError(() =>
+            of(
+              ExpenseActions.updateExpenseFailure({
+                error: 'Failed to update expense.',
+              })
+            )
+          )
+        )
+      )
+    ),
+  { functional: true }
+);
+
+const updateExpenseSuccess$ = createEffect(
+  (actions$ = inject(Actions)) =>
+    actions$.pipe(
+      ofType(ExpenseActions.updateExpenseSuccess),
+      map(() => RouterActions.go(['/expenses']))
+    ),
+  { functional: true }
+);
+
 export const ExpenseEffects = {
   loadExpenses$,
   createExpense$,
   createExpenseSuccess$,
+  updateExpense$,
+  updateExpenseSuccess$,
 };
