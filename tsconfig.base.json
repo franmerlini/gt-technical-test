@@ -31,6 +31,9 @@
       "@gt-technical-test/libs/web/expense/ui/expenses-table": [
         "libs/web/expense/ui/expenses-table/src/index.ts"
       ],
+      "@gt-technical-test/libs/web/expense/util": [
+        "libs/web/expense/util/src/index.ts"
+      ],
       "@gt-technical-test/libs/web/home/feature": [
         "libs/web/home/feature/src/index.ts"
       ],
