@@ -49,7 +49,6 @@ export class ExpensesComponent {
       category: {
         id: 1,
         name: 'Category 1',
-        color: 'BLUE',
       },
     },
     {
@@ -60,7 +59,6 @@ export class ExpensesComponent {
       category: {
         id: 2,
         name: 'Category 2',
-        color: 'ORANGE',
       },
     },
   ];

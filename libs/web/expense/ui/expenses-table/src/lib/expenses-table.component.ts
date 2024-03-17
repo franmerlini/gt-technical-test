@@ -33,7 +33,7 @@ import { Expense } from '@gt-technical-test/libs/common';
             <td>{{ expense.id }}</td>
             <td>{{ expense.name }}</td>
             <td>
-              <div [class]="getCategoryClass(expense)">
+              <div class="badge">
                 {{ expense.category.name }}
               </div>
             </td>
@@ -104,26 +104,6 @@ export class ExpensesTableComponent {
 
   @Output() edit = new EventEmitter<number>();
   @Output() delete = new EventEmitter<number>();
-
-  getCategoryClass(expense: Expense) {
-    const { color } = expense.category;
-
-    const colors: { [key: string]: string } = {
-      GREEN: 'badge bg-green-400 text-green-900',
-      ORANGE: 'badge bg-orange-400 text-orange-900',
-      RED: 'badge bg-red-400 text-red-900',
-      BLUE: 'badge bg-blue-400 text-blue-900',
-      PURPLE: 'badge bg-purple-400 text-purple-900',
-      YELLOW: 'badge bg-yellow-400 text-yellow-900',
-      PINK: 'badge bg-pink-400 text-pink-900',
-      INDIGO: 'badge bg-indigo-400 text-indigo-900',
-      TEAL: 'badge bg-teal-400 text-teal-900',
-      CYAN: 'badge bg-cyan-400 text-cyan-900',
-      GRAY: 'badge bg-gray-400 text-gray-900',
-    };
-
-    return colors[color];
-  }
 
   calculateTotal(expenses: Expense[]): number {
     return expenses.reduce((acc, expense) => acc + expense.amount, 0);
