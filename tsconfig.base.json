@@ -43,6 +43,9 @@
       "@gt-technical-test/libs/web/shared/data-access/store": [
         "libs/web/shared/data-access/store/src/index.ts"
       ],
+      "@gt-technical-test/libs/web/shared/ui": [
+        "libs/web/shared/ui/src/index.ts"
+      ],
       "@gt-technical-test/libs/web/shell/feature": [
         "libs/web/shell/feature/src/index.ts"
       ],
