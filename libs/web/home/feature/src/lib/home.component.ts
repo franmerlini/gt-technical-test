@@ -1,16 +1,19 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { BadgeListComponent } from '@gt-technical-test/libs/web/home/ui/badge-list';
 
 @Component({
   standalone: true,
-  imports: [BadgeListComponent],
+  imports: [BadgeListComponent, RouterLink],
   template: `
     <div class="flex flex-col items-center gap-16">
       <div class="flex flex-col gap-6 items-center">
         <h1 class="text-6xl font-bold">GT Technical Test</h1>
         <p class="text-xl">A simple application to prove technical skills</p>
-        <button class="btn btn-primary">Get started</button>
+        <a routerLink="/expenses" role="button" class="btn btn-primary"
+          >Get started</a
+        >
       </div>
 
       <div class="flex flex-col gap-2 items-center">
