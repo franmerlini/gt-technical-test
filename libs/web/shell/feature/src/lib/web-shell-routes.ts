@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 
-import { LayoutComponent } from '@front/libs/web/shell/ui/layout';
+import { LayoutComponent } from '@gt-technical-test/libs/web/shell/ui/layout';
 
 export const webShellRoutes: Route[] = [
   {
@@ -10,7 +10,9 @@ export const webShellRoutes: Route[] = [
       {
         path: '',
         loadComponent: () =>
-          import('@front/libs/web/home/feature').then((m) => m.HomeComponent),
+          import('@gt-technical-test/libs/web/home/feature').then(
+            (m) => m.HomeComponent
+          ),
       },
     ],
   },

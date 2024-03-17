@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { FooterComponent } from '@front/libs/web/shell/ui/footer';
-import { HeaderComponent } from '@front/libs/web/shell/ui/header';
+import { FooterComponent } from '@gt-technical-test/libs/web/shell/ui/footer';
+import { HeaderComponent } from '@gt-technical-test/libs/web/shell/ui/header';
 
 @Component({
   standalone: true,
