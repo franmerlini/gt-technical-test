@@ -3,7 +3,9 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
+  SimpleChanges,
   inject,
 } from '@angular/core';
 import {
@@ -102,7 +104,7 @@ type ExpenseForm = {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExpenseFormComponent {
+export class ExpenseFormComponent implements OnChanges {
   @Input({ required: true }) categoryList: SelectItem[] | undefined;
   @Input() expense: Expense | undefined;
   @Input() loading = false;
@@ -126,6 +128,19 @@ export class ExpenseFormComponent {
     ),
     amount: this.#fb.control(0, [Validators.required, Validators.min(1)]),
   });
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const expense = changes['expense']?.currentValue as Expense;
+    if (expense) {
+      const { name, category, date, amount } = expense;
+      this.form.patchValue({
+        name,
+        category: category.id,
+        date: new Date(date).toISOString().substring(0, 10),
+        amount,
+      });
+    }
+  }
 
   onSubmit(): void {
     if (this.loading) return;
