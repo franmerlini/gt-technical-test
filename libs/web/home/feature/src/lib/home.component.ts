@@ -1,11 +1,73 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { BadgeListComponent } from '@gt-technical-test/libs/web/home/ui/badge-list';
 
 @Component({
   standalone: true,
-  imports: [CommonModule],
-  template: `<p>web-home-feature works!</p>`,
+  imports: [BadgeListComponent],
+  template: `
+    <div class="flex flex-col items-center gap-16">
+      <div class="flex flex-col gap-6 items-center">
+        <h1 class="text-6xl font-bold">GT Technical Test</h1>
+        <p class="text-xl">A simple application to prove technical skills</p>
+        <button class="btn btn-primary">Get started</button>
+      </div>
+
+      <div class="flex flex-col gap-2 items-center">
+        <p>Created using</p>
+        <gt-badge-list [badges]="badges"></gt-badge-list>
+      </div>
+    </div>
+  `,
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {}
+export class HomeComponent {
+  badges = [
+    {
+      id: 1,
+      label: 'Angular',
+      image: '',
+    },
+    {
+      id: 2,
+      label: 'DaisyUI',
+      image: '',
+    },
+    {
+      id: 3,
+      label: 'NestJS',
+      image: '',
+    },
+    {
+      id: 4,
+      label: 'NgRx',
+      image: '',
+    },
+    {
+      id: 5,
+      label: 'NodeJS',
+      image: '',
+    },
+    {
+      id: 6,
+      label: 'RxJs',
+      image: '',
+    },
+    {
+      id: 7,
+      label: 'TailwindCSS',
+      image: '',
+    },
+    {
+      id: 8,
+      label: 'TypeORM',
+      image: '',
+    },
+    {
+      id: 9,
+      label: 'TypeScript',
+      image: '',
+    },
+  ];
+}
