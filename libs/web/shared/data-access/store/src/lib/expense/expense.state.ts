@@ -1,7 +1,8 @@
 import { EntityAdapter, EntityState, createEntityAdapter } from '@ngrx/entity';
-import { createFeature, createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 
 import { Expense } from '@gt-technical-test/libs/common';
+import { selectCurrentRoute } from '../root';
 import { ExpenseActions } from './expense.actions';
 
 export const expenseFeatureKey = 'expense';
@@ -50,5 +51,10 @@ export const ExpenseFeature = createFeature({
   reducer,
   extraSelectors: ({ selectExpenseState }) => ({
     ...adapter.getSelectors(selectExpenseState),
+    selectActive: createSelector(
+      selectExpenseState,
+      selectCurrentRoute,
+      (state, route) => state.entities[route.params['id']]
+    ),
   }),
 });
