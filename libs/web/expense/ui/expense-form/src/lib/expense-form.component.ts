@@ -6,10 +6,12 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
+  ViewChild,
   inject,
 } from '@angular/core';
 import {
   FormControl,
+  FormGroupDirective,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
@@ -40,6 +42,7 @@ type ExpenseForm = {
       class="flex flex-col gap-4"
       [formGroup]="form"
       (ngSubmit)="onSubmit()"
+      ngForm
     >
       <label class="form-control w-full">
         <div class="label">
@@ -91,7 +94,13 @@ type ExpenseForm = {
       </label>
 
       <div class="flex justify-end gap-2">
-        <button type="button" class="btn btn-secondary mt-4">Reset</button>
+        <button
+          type="button"
+          class="btn btn-secondary mt-4"
+          (click)="formGroupDirective.resetForm()"
+        >
+          Reset
+        </button>
         <button type="submit" class="btn btn-primary mt-4">
           @if(loading) {
           <span class="loading loading-spinner"></span>
@@ -105,6 +114,8 @@ type ExpenseForm = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpenseFormComponent implements OnChanges {
+  @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
+
   @Input({ required: true }) categoryList: SelectItem[] | undefined;
   @Input() expense: Expense | undefined;
   @Input() loading = false;
