@@ -43,6 +43,24 @@ const reducer = createReducer(
     loading: false,
     loaded: false,
     error,
+  })),
+
+  on(ExpenseActions.createExpense, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(ExpenseActions.createExpenseSuccess, (state, { expense }) =>
+    adapter.addOne(expense, {
+      ...state,
+      loading: false,
+      error: null,
+    })
+  ),
+  on(ExpenseActions.createExpenseFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
   }))
 );
 

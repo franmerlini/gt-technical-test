@@ -5,6 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of } from 'rxjs';
 
 import { ExpenseService } from '@gt-technical-test/libs/web/shared/data-access/api';
+import { RouterActions } from '@gt-technical-test/libs/web/shared/data-access/store';
 import { ExpenseActions } from './expense.actions';
 
 const loadExpenses$ = createEffect(
@@ -27,4 +28,39 @@ const loadExpenses$ = createEffect(
   { functional: true }
 );
 
-export const ExpenseEffects = { loadExpenses$ };
+const createExpense$ = createEffect(
+  (actions$ = inject(Actions), expenseService = inject(ExpenseService)) =>
+    actions$.pipe(
+      ofType(ExpenseActions.createExpense),
+      exhaustMap(({ expense }) =>
+        expenseService.createExpense(expense).pipe(
+          map((createdExpense) =>
+            ExpenseActions.createExpenseSuccess({ expense: createdExpense })
+          ),
+          catchError(() =>
+            of(
+              ExpenseActions.createExpenseFailure({
+                error: 'Failed to create expense.',
+              })
+            )
+          )
+        )
+      )
+    ),
+  { functional: true }
+);
+
+const createExpenseSuccess$ = createEffect(
+  (actions$ = inject(Actions)) =>
+    actions$.pipe(
+      ofType(ExpenseActions.createExpenseSuccess),
+      map(() => RouterActions.go(['/expenses']))
+    ),
+  { functional: true }
+);
+
+export const ExpenseEffects = {
+  loadExpenses$,
+  createExpense$,
+  createExpenseSuccess$,
+};
