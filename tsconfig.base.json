@@ -25,6 +25,9 @@
       ],
       "@front/libs/web/shell/ui/layout": [
         "libs/web/shell/ui/layout/src/index.ts"
+      ],
+      "@gt-technical-test/libs/web/home/ui/badge-list": [
+        "libs/web/home/ui/badge-list/src/index.ts"
       ]
     }
   },
