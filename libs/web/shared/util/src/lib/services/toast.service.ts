@@ -10,19 +10,19 @@ export class ToastService {
 
   info(message: string): void {
     this.toast.info(message, {
-      duration: 5000,
+      duration: 3000,
     });
   }
 
   success(message: string): void {
     this.toast.success(message, {
-      duration: 5000,
+      duration: 3000,
     });
   }
 
   warning(message: string): void {
     this.toast.warning(message, {
-      duration: 5000,
+      duration: 3000,
     });
   }
 
