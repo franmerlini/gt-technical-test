@@ -82,6 +82,24 @@ const reducer = createReducer(
     ...state,
     loading: false,
     error,
+  })),
+
+  on(ExpenseActions.deleteExpense, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(ExpenseActions.deleteExpenseSuccess, (state, { expenseId }) =>
+    adapter.removeOne(expenseId, {
+      ...state,
+      loading: false,
+      error: null,
+    })
+  ),
+  on(ExpenseActions.deleteExpenseFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
   }))
 );
 
