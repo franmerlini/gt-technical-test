@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 
+import { CoreModule } from '@gt-technical-test/libs/api/core';
+
 @Module({
-  imports: [],
+  imports: [CoreModule],
 })
 export class AppModule {}
