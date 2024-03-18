@@ -17,91 +17,67 @@ import {
   Validators,
 } from '@angular/forms';
 
-import {
-  CreateExpenseDto,
-  Expense,
-  SelectItem,
-  UpdateExpenseDto,
-} from '@gt-technical-test/libs/common';
+import { CreateExpenseDto, Expense, SelectItem, UpdateExpenseDto } from '@gt-technical-test/libs/common';
+import { InputComponent, SelectComponent } from '@gt-technical-test/libs/web/shared/ui';
+import { CustomValidators } from '@gt-technical-test/libs/web/shared/util';
 
 type ExpenseForm = {
   name: FormControl<string>;
   category: FormControl<number>;
   date: FormControl<string>;
-  amount: FormControl<number>;
+  amount: FormControl<string>;
 };
 
 @Component({
   selector: 'gt-expense-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InputComponent, SelectComponent],
   template: `
-    <h1 class="text-2xl">{{ expense ? 'Edit expense' : 'Add expense' }}</h1>
-
     <form
-      class="flex flex-col gap-4"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
       [formGroup]="form"
       (ngSubmit)="onSubmit()"
       ngForm
     >
-      <label class="form-control w-full">
-        <div class="label">
-          <span class="label-text">Expense</span>
-        </div>
-        <input
-          type="text"
-          class="input input-bordered w-full"
-          formControlName="name"
-        />
-      </label>
+      <gt-input
+        ngDefaultControl
+        [type]="'text'"
+        [placeholder]="'Expense'"
+        [formControlName]="'name'"
+        [formControl]="name"
+        class="w-full"
+      ></gt-input>
 
-      <label class="form-control w-full">
-        <div class="label">
-          <span class="label-text">Category</span>
-        </div>
-        <select
-          class="select select-bordered w-full"
-          formControlName="category"
-        >
-          <option disabled value="0">Category</option>
-          @for(category of categoryList; track category.id) {
-          <option [value]="category.id">{{ category.name }}</option>
-          }
-        </select>
-      </label>
+      <gt-select
+        ngDefaultControl
+        [list]="categoryList"
+        [placeholder]="'Category'"
+        [formControlName]="'category'"
+        [formControl]="category"
+        class="w-full"
+      ></gt-select>
 
-      <label class="form-control w-full">
-        <div class="label">
-          <span class="label-text">Payment date</span>
-        </div>
-        <input
-          type="date"
-          placeholder="Payment date"
-          class="input input-bordered w-full"
-          formControlName="date"
-        />
-      </label>
+      <gt-input
+        ngDefaultControl
+        [type]="'date'"
+        [placeholder]="'Payment date'"
+        [formControlName]="'date'"
+        [formControl]="date"
+        class="w-full"
+      ></gt-input>
 
-      <label class="form-control w-full">
-        <div class="label">
-          <span class="label-text">Amount</span>
-        </div>
-        <input
-          type="number"
-          class="input input-bordered w-full"
-          formControlName="amount"
-        />
-      </label>
+      <gt-input
+        ngDefaultControl
+        [type]="'text'"
+        [placeholder]="'Amount'"
+        [formControlName]="'amount'"
+        [formControl]="amount"
+        class="w-full"
+      ></gt-input>
 
-      <div class="flex justify-end gap-2">
-        <button
-          type="button"
-          class="btn btn-secondary mt-4"
-          (click)="formGroupDirective.resetForm()"
-        >
-          Reset
-        </button>
-        <button type="submit" class="btn btn-primary mt-4">
+      <div class="sm:col-span-2 md:col-span-3 flex flex-col gap-3 sm:flex-row sm:justify-end">
+        <button type="button" class="btn btn-secondary" (click)="formGroupDirective.resetForm()">Reset</button>
+        <button type="submit" class="btn btn-primary">
           @if(loading) {
           <span class="loading loading-spinner"></span>
           } @else {
@@ -116,7 +92,7 @@ type ExpenseForm = {
 export class ExpenseFormComponent implements OnChanges {
   @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
 
-  @Input({ required: true }) categoryList: SelectItem[] | undefined;
+  @Input({ required: true }) categoryList!: SelectItem[];
   @Input() expense: Expense | undefined;
   @Input() loading = false;
 
@@ -127,17 +103,14 @@ export class ExpenseFormComponent implements OnChanges {
   #fb = inject(NonNullableFormBuilder);
 
   form = this.#fb.group<ExpenseForm>({
-    name: this.#fb.control('', [
+    name: this.#fb.control('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+    category: this.#fb.control(0, [CustomValidators.requiredSelectValidator, Validators.min(1)]),
+    date: this.#fb.control(new Date().toISOString().substring(0, 10), Validators.required),
+    amount: this.#fb.control('', [
       Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(30),
+      Validators.min(1),
+      CustomValidators.rationalTwoDecimalsValidator,
     ]),
-    category: this.#fb.control(0, [Validators.required, Validators.min(1)]),
-    date: this.#fb.control(
-      new Date().toISOString().substring(0, 10),
-      Validators.required
-    ),
-    amount: this.#fb.control(0, [Validators.required, Validators.min(1)]),
   });
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -148,7 +121,7 @@ export class ExpenseFormComponent implements OnChanges {
         name,
         category: category.id,
         date: new Date(date).toISOString().substring(0, 10),
-        amount,
+        amount: amount.toString(),
       });
     }
   }
@@ -157,6 +130,7 @@ export class ExpenseFormComponent implements OnChanges {
     if (this.loading) return;
 
     if (this.form.invalid) {
+      this.form.markAllAsTouched();
       this.formError.emit('Check the form fields and try again.');
       return;
     }
@@ -165,11 +139,9 @@ export class ExpenseFormComponent implements OnChanges {
 
     const createExpenseDto: CreateExpenseDto = {
       name,
-      category: this.categoryList?.find(
-        ({ id }) => id === +category
-      ) as SelectItem,
+      category: this.categoryList?.find(({ id }) => id === +category) as SelectItem,
       date: new Date(date),
-      amount,
+      amount: Number(amount),
     };
 
     if (this.expense) {
@@ -181,5 +153,21 @@ export class ExpenseFormComponent implements OnChanges {
     }
 
     this.add.emit(createExpenseDto);
+  }
+
+  get name(): FormControl<string> {
+    return this.form.get('name') as FormControl<string>;
+  }
+
+  get category(): FormControl<number> {
+    return this.form.get('category') as FormControl<number>;
+  }
+
+  get date(): FormControl<string> {
+    return this.form.get('date') as FormControl<string>;
+  }
+
+  get amount(): FormControl<string> {
+    return this.form.get('amount') as FormControl<string>;
   }
 }
