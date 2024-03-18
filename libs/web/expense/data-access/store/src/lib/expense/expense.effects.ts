@@ -3,10 +3,11 @@ import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 
-import { catchError, exhaustMap, filter, map, of, withLatestFrom } from 'rxjs';
+import { catchError, exhaustMap, filter, map, of, switchMap, withLatestFrom } from 'rxjs';
 
 import { ExpenseService } from '@gt-technical-test/libs/web/shared/data-access/api';
-import { RouterActions } from '@gt-technical-test/libs/web/shared/data-access/store';
+import { RouterActions, ToastActions } from '@gt-technical-test/libs/web/shared/data-access/store';
+
 import { ExpenseActions } from './expense.actions';
 import { ExpenseFeature } from './expense.state';
 
@@ -36,9 +37,7 @@ const createExpense$ = createEffect(
       ofType(ExpenseActions.createExpense),
       exhaustMap(({ expense }) =>
         expenseService.createExpense(expense).pipe(
-          map((createdExpense) =>
-            ExpenseActions.createExpenseSuccess({ expense: createdExpense })
-          ),
+          map((createdExpense) => ExpenseActions.createExpenseSuccess({ expense: createdExpense })),
           catchError(() =>
             of(
               ExpenseActions.createExpenseFailure({
@@ -56,26 +55,23 @@ const createExpenseSuccess$ = createEffect(
   (actions$ = inject(Actions)) =>
     actions$.pipe(
       ofType(ExpenseActions.createExpenseSuccess),
-      map(() => RouterActions.go(['/expenses']))
+      switchMap(() => [
+        ToastActions.toastSuccess({ message: 'Expense added successfully.' }),
+        RouterActions.go(['/expenses']),
+      ])
     ),
   { functional: true }
 );
 
 const updateExpense$ = createEffect(
-  (
-    actions$ = inject(Actions),
-    expenseService = inject(ExpenseService),
-    store = inject(Store)
-  ) =>
+  (actions$ = inject(Actions), expenseService = inject(ExpenseService), store = inject(Store)) =>
     actions$.pipe(
       ofType(ExpenseActions.updateExpense),
       withLatestFrom(store.select(ExpenseFeature.selectActive)),
       filter(([, { id }]) => !!id),
       exhaustMap(([{ expense }, { id }]) =>
         expenseService.updateExpense(id, expense).pipe(
-          map((updatedExpense) =>
-            ExpenseActions.updateExpenseSuccess({ expense: updatedExpense })
-          ),
+          map((updatedExpense) => ExpenseActions.updateExpenseSuccess({ expense: updatedExpense })),
           catchError(() =>
             of(
               ExpenseActions.updateExpenseFailure({
@@ -93,7 +89,10 @@ const updateExpenseSuccess$ = createEffect(
   (actions$ = inject(Actions)) =>
     actions$.pipe(
       ofType(ExpenseActions.updateExpenseSuccess),
-      map(() => RouterActions.go(['/expenses']))
+      switchMap(() => [
+        ToastActions.toastSuccess({ message: 'Expense updated successfully.' }),
+        RouterActions.go(['/expenses']),
+      ])
     ),
   { functional: true }
 );
@@ -104,9 +103,7 @@ const deleteExpense$ = createEffect(
       ofType(ExpenseActions.deleteExpense),
       exhaustMap(({ expenseId }) =>
         expenseService.deleteExpense(expenseId).pipe(
-          map((expenseId) =>
-            ExpenseActions.deleteExpenseSuccess({ expenseId })
-          ),
+          map((expenseId) => ExpenseActions.deleteExpenseSuccess({ expenseId })),
           catchError(() =>
             of(
               ExpenseActions.deleteExpenseFailure({
@@ -120,6 +117,29 @@ const deleteExpense$ = createEffect(
   { functional: true }
 );
 
+const deleteExpenseSuccess$ = createEffect(
+  (actions$ = inject(Actions)) =>
+    actions$.pipe(
+      ofType(ExpenseActions.deleteExpenseSuccess),
+      map(() => ToastActions.toastSuccess({ message: 'Expense deleted successfully.' }))
+    ),
+  { functional: true }
+);
+
+const apiError$ = createEffect(
+  (actions$ = inject(Actions)) =>
+    actions$.pipe(
+      ofType(
+        ExpenseActions.loadExpensesFailure,
+        ExpenseActions.createExpenseFailure,
+        ExpenseActions.updateExpenseFailure,
+        ExpenseActions.deleteExpenseFailure
+      ),
+      map(({ error }) => ToastActions.toastError({ message: error }))
+    ),
+  { functional: true }
+);
+
 export const ExpenseEffects = {
   loadExpenses$,
   createExpense$,
@@ -127,4 +147,6 @@ export const ExpenseEffects = {
   updateExpense$,
   updateExpenseSuccess$,
   deleteExpense$,
+  deleteExpenseSuccess$,
+  apiError$,
 };
