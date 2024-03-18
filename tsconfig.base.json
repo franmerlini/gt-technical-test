@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@gt-technical-test/libs/api/core": ["libs/api/core/src/index.ts"],
+      "@gt-technical-test/libs/api/expense": ["libs/api/expense/src/index.ts"],
       "@gt-technical-test/libs/common": ["libs/common/src/index.ts"],
       "@gt-technical-test/libs/web/expense/data-access/store": [
         "libs/web/expense/data-access/store/src/index.ts"
