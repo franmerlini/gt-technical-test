@@ -50,7 +50,7 @@ export class ExpenseService {
   createExpense(expense: CreateExpenseDto): Observable<Expense> {
     // return this.#http.post<Expense>('/api/expenses', expense);
 
-    const newExpense: Expense = { id: this.#lastId++, ...expense };
+    const newExpense: Expense = { id: ++this.#lastId, ...expense };
 
     this.#expenses = [...this.#expenses, newExpense];
 
@@ -73,9 +73,7 @@ export class ExpenseService {
 
   deleteExpense(expenseId: number): Observable<number> {
     // return this.#http.delete<void>(`/api/expenses/${id}`);
-    const index = this.#expenses.findIndex(({ id }) => id === expenseId);
-
-    this.#expenses.splice(index, 1);
+    this.#expenses = this.#expenses.filter(({ id }) => id !== expenseId);
 
     return of(expenseId).pipe(delay(1000));
   }

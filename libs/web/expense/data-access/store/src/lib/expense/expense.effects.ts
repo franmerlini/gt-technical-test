@@ -98,10 +98,33 @@ const updateExpenseSuccess$ = createEffect(
   { functional: true }
 );
 
+const deleteExpense$ = createEffect(
+  (actions$ = inject(Actions), expenseService = inject(ExpenseService)) =>
+    actions$.pipe(
+      ofType(ExpenseActions.deleteExpense),
+      exhaustMap(({ expenseId }) =>
+        expenseService.deleteExpense(expenseId).pipe(
+          map((expenseId) =>
+            ExpenseActions.deleteExpenseSuccess({ expenseId })
+          ),
+          catchError(() =>
+            of(
+              ExpenseActions.deleteExpenseFailure({
+                error: 'Failed to delete expense.',
+              })
+            )
+          )
+        )
+      )
+    ),
+  { functional: true }
+);
+
 export const ExpenseEffects = {
   loadExpenses$,
   createExpense$,
   createExpenseSuccess$,
   updateExpense$,
   updateExpenseSuccess$,
+  deleteExpense$,
 };
