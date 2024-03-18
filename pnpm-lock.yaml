@@ -31,7 +31,10 @@ dependencies:
     version: 17.2.4(@angular/common@17.2.4)(@angular/core@17.2.4)(@angular/platform-browser@17.2.4)(rxjs@7.8.1)
   '@nestjs/common':
     specifier: ^10.0.2
-    version: 10.3.3(reflect-metadata@0.1.14)(rxjs@7.8.1)
+    version: 10.3.3(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.1)
+  '@nestjs/config':
+    specifier: 3.2.0
+    version: 3.2.0(@nestjs/common@10.3.3)(rxjs@7.8.1)
   '@nestjs/core':
     specifier: ^10.0.2
     version: 10.3.3(@nestjs/common@10.3.3)(@nestjs/platform-express@10.3.3)(reflect-metadata@0.1.14)(rxjs@7.8.1)
@@ -56,6 +59,15 @@ dependencies:
   '@nx/angular':
     specifier: 18.1.1
     version: 18.1.1(@angular-devkit/build-angular@17.2.3)(@angular-devkit/core@17.2.3)(@angular-devkit/schematics@17.2.3)(@schematics/angular@17.2.3)(@swc-node/register@1.8.0)(@swc/core@1.3.107)(@types/node@18.16.9)(eslint@8.48.0)(nx@18.1.1)(rxjs@7.8.1)(typescript@5.3.3)(webpack-cli@5.1.4)
+  class-transformer:
+    specifier: 0.5.1
+    version: 0.5.1
+  class-validator:
+    specifier: 0.14.1
+    version: 0.14.1
+  express:
+    specifier: 4.18.3
+    version: 4.18.3
   reflect-metadata:
     specifier: ^0.1.13
     version: 0.1.14
@@ -72,7 +84,7 @@ dependencies:
 devDependencies:
   '@angular-devkit/build-angular':
     specifier: ~17.2.0
-    version: 17.2.3(@angular/compiler-cli@17.2.4)(@swc/core@1.3.107)(@types/node@18.16.9)(jest-environment-jsdom@29.7.0)(jest@29.7.0)(stylus@0.59.0)(tailwindcss@3.4.1)(typescript@5.3.3)(webpack-cli@5.1.4)
+    version: 17.2.3(@angular/compiler-cli@17.2.4)(@swc/core@1.3.107)(@types/express@4.17.21)(@types/node@18.16.9)(jest-environment-jsdom@29.7.0)(jest@29.7.0)(stylus@0.59.0)(tailwindcss@3.4.1)(typescript@5.3.3)(webpack-cli@5.1.4)
   '@angular-devkit/core':
     specifier: ~17.2.0
     version: 17.2.3
@@ -142,6 +154,9 @@ devDependencies:
   '@swc/helpers':
     specifier: ~0.5.2
     version: 0.5.6
+  '@types/express':
+    specifier: 4.17.21
+    version: 4.17.21
   '@types/jest':
     specifier: ^29.4.0
     version: 29.5.12
@@ -239,7 +254,7 @@ packages:
     transitivePeerDependencies:
       - chokidar
 
-  /@angular-devkit/build-angular@17.2.3(@angular/compiler-cli@17.2.4)(@swc/core@1.3.107)(@types/node@18.16.9)(jest-environment-jsdom@29.7.0)(jest@29.7.0)(stylus@0.59.0)(tailwindcss@3.4.1)(typescript@5.3.3)(webpack-cli@5.1.4):
+  /@angular-devkit/build-angular@17.2.3(@angular/compiler-cli@17.2.4)(@swc/core@1.3.107)(@types/express@4.17.21)(@types/node@18.16.9)(jest-environment-jsdom@29.7.0)(jest@29.7.0)(stylus@0.59.0)(tailwindcss@3.4.1)(typescript@5.3.3)(webpack-cli@5.1.4):
     resolution: {integrity: sha512-AZsEHZj+k2Lxb7uQUwfEpSE6TvQhCoIgP6XLKgKxZHUOiTUVXDj84WhNcbup5SsSG1cafmoVN7APxxuSwHcoeg==}
     engines: {node: ^18.13.0 || >=20.9.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -3677,7 +3692,7 @@ packages:
     resolution: {integrity: sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA==}
     engines: {node: '>=8'}
 
-  /@nestjs/common@10.3.3(reflect-metadata@0.1.14)(rxjs@7.8.1):
+  /@nestjs/common@10.3.3(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.1):
     resolution: {integrity: sha512-LAkTe8/CF0uNWM0ecuDwUNTHCi1lVSITmmR4FQ6Ftz1E7ujQCnJ5pMRzd8JRN14vdBkxZZ8VbVF0BDUKoKNxMQ==}
     peerDependencies:
       class-transformer: '*'
@@ -3690,11 +3705,27 @@ packages:
       class-validator:
         optional: true
     dependencies:
+      class-transformer: 0.5.1
+      class-validator: 0.14.1
       iterare: 1.2.1
       reflect-metadata: 0.1.14
       rxjs: 7.8.1
       tslib: 2.6.2
       uid: 2.0.2
+
+  /@nestjs/config@3.2.0(@nestjs/common@10.3.3)(rxjs@7.8.1):
+    resolution: {integrity: sha512-BpYRn57shg7CH35KGT6h+hT7ZucB6Qn2B3NBNdvhD4ApU8huS5pX/Wc2e/aO5trIha606Bz2a9t9/vbiuTBTww==}
+    peerDependencies:
+      '@nestjs/common': ^8.0.0 || ^9.0.0 || ^10.0.0
+      rxjs: ^7.1.0
+    dependencies:
+      '@nestjs/common': 10.3.3(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.1)
+      dotenv: 16.4.1
+      dotenv-expand: 10.0.0
+      lodash: 4.17.21
+      rxjs: 7.8.1
+      uuid: 9.0.1
+    dev: false
 
   /@nestjs/core@10.3.3(@nestjs/common@10.3.3)(@nestjs/platform-express@10.3.3)(reflect-metadata@0.1.14)(rxjs@7.8.1):
     resolution: {integrity: sha512-kxJWggQAPX3RuZx9JVec69eSLaYLNIox2emkZJpfBJ5Qq7cAq7edQIt1r4LGjTKq6kFubNTPsqhWf5y7yFRBPw==}
@@ -3714,7 +3745,7 @@ packages:
       '@nestjs/websockets':
         optional: true
     dependencies:
-      '@nestjs/common': 10.3.3(reflect-metadata@0.1.14)(rxjs@7.8.1)
+      '@nestjs/common': 10.3.3(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.1)
       '@nestjs/platform-express': 10.3.3(@nestjs/common@10.3.3)(@nestjs/core@10.3.3)
       '@nuxtjs/opencollective': 0.3.2
       fast-safe-stringify: 2.1.1
@@ -3733,7 +3764,7 @@ packages:
       '@nestjs/common': ^10.0.0
       '@nestjs/core': ^10.0.0
     dependencies:
-      '@nestjs/common': 10.3.3(reflect-metadata@0.1.14)(rxjs@7.8.1)
+      '@nestjs/common': 10.3.3(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.1)
       '@nestjs/core': 10.3.3(@nestjs/common@10.3.3)(@nestjs/platform-express@10.3.3)(reflect-metadata@0.1.14)(rxjs@7.8.1)
       body-parser: 1.20.2
       cors: 2.8.5
@@ -3785,7 +3816,7 @@ packages:
       '@nestjs/platform-express':
         optional: true
     dependencies:
-      '@nestjs/common': 10.3.3(reflect-metadata@0.1.14)(rxjs@7.8.1)
+      '@nestjs/common': 10.3.3(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.1)
       '@nestjs/core': 10.3.3(@nestjs/common@10.3.3)(@nestjs/platform-express@10.3.3)(reflect-metadata@0.1.14)(rxjs@7.8.1)
       '@nestjs/platform-express': 10.3.3(@nestjs/common@10.3.3)(@nestjs/core@10.3.3)
       tslib: 2.6.2
@@ -4221,7 +4252,7 @@ packages:
       esbuild:
         optional: true
     dependencies:
-      '@angular-devkit/build-angular': 17.2.3(@angular/compiler-cli@17.2.4)(@swc/core@1.3.107)(@types/node@18.16.9)(jest-environment-jsdom@29.7.0)(jest@29.7.0)(stylus@0.59.0)(tailwindcss@3.4.1)(typescript@5.3.3)(webpack-cli@5.1.4)
+      '@angular-devkit/build-angular': 17.2.3(@angular/compiler-cli@17.2.4)(@swc/core@1.3.107)(@types/express@4.17.21)(@types/node@18.16.9)(jest-environment-jsdom@29.7.0)(jest@29.7.0)(stylus@0.59.0)(tailwindcss@3.4.1)(typescript@5.3.3)(webpack-cli@5.1.4)
       '@angular-devkit/core': 17.2.3
       '@angular-devkit/schematics': 17.2.3
       '@nrwl/angular': 18.1.1(@angular-devkit/build-angular@17.2.3)(@angular-devkit/core@17.2.3)(@angular-devkit/schematics@17.2.3)(@schematics/angular@17.2.3)(@swc-node/register@1.8.0)(@swc/core@1.3.107)(@types/node@18.16.9)(eslint@8.48.0)(nx@18.1.1)(rxjs@7.8.1)(typescript@5.3.3)(webpack-cli@5.1.4)
@@ -5226,6 +5257,9 @@ packages:
 
   /@types/tough-cookie@4.0.5:
     resolution: {integrity: sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==}
+
+  /@types/validator@13.11.9:
+    resolution: {integrity: sha512-FCTsikRozryfayPuiI46QzH3fnrOoctTjvOYZkho9BTFLCOZ2rgZJHMOVgCOfttjPJcgOx52EpkY0CMfy87MIw==}
 
   /@types/ws@8.5.10:
     resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
@@ -6313,6 +6347,16 @@ packages:
   /cjs-module-lexer@1.2.3:
     resolution: {integrity: sha512-0TNiGstbQmCFwt4akjjBg5pLRTSyj/PkWQ1ZoO2zntmg9yLqSRxwEa4iCfQLGjqhiqBfOJa7W/E8wfGrTDmlZQ==}
 
+  /class-transformer@0.5.1:
+    resolution: {integrity: sha512-SQa1Ws6hUbfC98vKGxZH3KFY0Y1lm5Zm0SY8XX9zbK7FJCyVEac3ATW0RIpwzW+oOfmHE5PMPufDG9hCfoEOMw==}
+
+  /class-validator@0.14.1:
+    resolution: {integrity: sha512-2VEG9JICxIqTpoK1eMzZqaV+u/EiwEJkMGzTrZf6sU/fwsnOITVgYJ8yojSy6CaXtO9V0Cc6ZQZ8h8m4UBuLwQ==}
+    dependencies:
+      '@types/validator': 13.11.9
+      libphonenumber-js: 1.10.58
+      validator: 13.11.0
+
   /clean-stack@2.2.0:
     resolution: {integrity: sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==}
     engines: {node: '>=6'}
@@ -7026,6 +7070,11 @@ packages:
   /dotenv@16.3.2:
     resolution: {integrity: sha512-HTlk5nmhkm8F6JcdXvHIzaorzCoziNQT9mGxLPVXW8wJF1TiGSL60ZGB4gHWabHOaMmWmhvk2/lPHfnBiT78AQ==}
     engines: {node: '>=12'}
+
+  /dotenv@16.4.1:
+    resolution: {integrity: sha512-CjA3y+Dr3FyFDOAMnxZEGtnW9KBR2M0JvvUtXNW+dYJL5ROWxP9DUHCwgFqpMk0OXCc0ljhaNTr2w/kutYIcHQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /duplexer@0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
@@ -8627,7 +8676,7 @@ packages:
       jest: ^29.0.0
       typescript: '>=4.8'
     dependencies:
-      '@angular-devkit/build-angular': 17.2.3(@angular/compiler-cli@17.2.4)(@swc/core@1.3.107)(@types/node@18.16.9)(jest-environment-jsdom@29.7.0)(jest@29.7.0)(stylus@0.59.0)(tailwindcss@3.4.1)(typescript@5.3.3)(webpack-cli@5.1.4)
+      '@angular-devkit/build-angular': 17.2.3(@angular/compiler-cli@17.2.4)(@swc/core@1.3.107)(@types/express@4.17.21)(@types/node@18.16.9)(jest-environment-jsdom@29.7.0)(jest@29.7.0)(stylus@0.59.0)(tailwindcss@3.4.1)(typescript@5.3.3)(webpack-cli@5.1.4)
       '@angular/compiler-cli': 17.2.4(@angular/compiler@17.2.4)(typescript@5.3.3)
       '@angular/core': 17.2.4(rxjs@7.8.1)(zone.js@0.14.4)
       '@angular/platform-browser-dynamic': 17.2.4(@angular/common@17.2.4)(@angular/compiler@17.2.4)(@angular/core@17.2.4)(@angular/platform-browser@17.2.4)
@@ -9054,6 +9103,9 @@ packages:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+
+  /libphonenumber-js@1.10.58:
+    resolution: {integrity: sha512-53A0IpJFL9LdHbpeatwizf8KSwPICrqn9H0g3Y7WQ+Jgeu9cQ4Ew3WrRtrLBu/CX2lXd5+rgT01/tGlkbkzOjw==}
 
   /license-webpack-plugin@4.0.2(webpack@5.90.1):
     resolution: {integrity: sha512-771TFWFD70G1wLTC4oU2Cw4qvtmNrIw+wRvBtn+okgHl7slJVi7zfNcdmqDL72BojM30VNJ2UHylr1o77U37Jw==}
@@ -11831,6 +11883,11 @@ packages:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
 
+  /uuid@9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    hasBin: true
+    dev: false
+
   /v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
 
@@ -11854,6 +11911,10 @@ packages:
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dependencies:
       builtins: 5.0.1
+
+  /validator@13.11.0:
+    resolution: {integrity: sha512-Ii+sehpSfZy+At5nPdnyMhx78fEoPDkR2XW/zimHEL3MyGJQOCQ7WeP20jPYRz7ZCpcKLB21NxuXHF3bxjStBQ==}
+    engines: {node: '>= 0.10'}
 
   /vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
