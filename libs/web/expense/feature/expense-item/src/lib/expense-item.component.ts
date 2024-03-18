@@ -5,15 +5,8 @@ import { Store } from '@ngrx/store';
 
 import { combineLatest, map } from 'rxjs';
 
-import {
-  CreateExpenseDto,
-  UpdateExpenseDto,
-} from '@gt-technical-test/libs/common';
-import {
-  CategoryFeature,
-  ExpenseActions,
-  ExpenseFeature,
-} from '@gt-technical-test/libs/web/expense/data-access/store';
+import { CreateExpenseDto, UpdateExpenseDto } from '@gt-technical-test/libs/common';
+import { CategoryFeature, ExpenseActions, ExpenseFeature } from '@gt-technical-test/libs/web/expense/data-access/store';
 import { ExpenseFormComponent } from '@gt-technical-test/libs/web/expense/ui/expense-form';
 
 @Component({
@@ -21,8 +14,10 @@ import { ExpenseFormComponent } from '@gt-technical-test/libs/web/expense/ui/exp
   standalone: true,
   imports: [ExpenseFormComponent, AsyncPipe],
   template: `
-    <div>
-      @if(data$ | async; as data ) {
+    <h1 class="text-2xl">{{ (expense$ | async) ? 'Edit expense' : 'Add expense' }}</h1>
+
+    @if(data$ | async; as data ) {
+    <div class="mt-4">
       <gt-expense-form
         [categoryList]="data.categories"
         [expense]="data.expense"
@@ -31,8 +26,8 @@ import { ExpenseFormComponent } from '@gt-technical-test/libs/web/expense/ui/exp
         (update)="onUpdate($event)"
         (formError)="onFormError($event)"
       ></gt-expense-form>
-      }
     </div>
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
