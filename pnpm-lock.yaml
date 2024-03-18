@@ -44,6 +44,9 @@ dependencies:
   '@nestjs/typeorm':
     specifier: 10.0.2
     version: 10.0.2(@nestjs/common@10.3.3)(@nestjs/core@10.3.3)(reflect-metadata@0.1.14)(rxjs@7.8.1)(typeorm@0.3.20)
+  '@ngneat/hot-toast':
+    specifier: 7.0.0
+    version: 7.0.0(@angular/core@17.2.4)(@ngneat/overview@6.0.0)
   '@ngrx/effects':
     specifier: 17.1.1
     version: 17.1.1(@angular/core@17.2.4)(@ngrx/store@17.1.1)(rxjs@7.8.1)
@@ -3849,6 +3852,26 @@ packages:
       rxjs: 7.8.1
       typeorm: 0.3.20(pg@8.11.3)(ts-node@10.9.1)
       uuid: 9.0.1
+    dev: false
+
+  /@ngneat/hot-toast@7.0.0(@angular/core@17.2.4)(@ngneat/overview@6.0.0):
+    resolution: {integrity: sha512-t/7msPgtZT534HBxAPjvr6dovP0jyf/intibceUq6i+woa4gnt44jSMsAmI3WVz8UoOmwG1wBwJOKu0zdLmCOA==}
+    peerDependencies:
+      '@angular/core': '>= 17.0.0 < 18.0.0'
+      '@ngneat/overview': 6.0.0
+    dependencies:
+      '@angular/core': 17.2.4(rxjs@7.8.1)(zone.js@0.14.4)
+      '@ngneat/overview': 6.0.0(@angular/core@17.2.4)
+      tslib: 2.6.2
+    dev: false
+
+  /@ngneat/overview@6.0.0(@angular/core@17.2.4):
+    resolution: {integrity: sha512-pm4bAEYtnUl8q82dwjh5NN9HF0WTFEI58VtR12izp9Oaa2dtseX82VUArfb4fadmlbHpPMUwXHrsm0ORyWii2A==}
+    peerDependencies:
+      '@angular/core': '>=17'
+    dependencies:
+      '@angular/core': 17.2.4(rxjs@7.8.1)(zone.js@0.14.4)
+      tslib: 2.6.2
     dev: false
 
   /@ngrx/effects@17.1.1(@angular/core@17.2.4)(@ngrx/store@17.1.1)(rxjs@7.8.1):

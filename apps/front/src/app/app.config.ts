@@ -7,6 +7,8 @@ import { provideRouterStore } from '@ngrx/router-store';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
+import { provideHotToastConfig } from '@ngneat/hot-toast';
+
 import {
   CustomSerializer,
   ROOT_EFFECTS,
@@ -26,5 +28,6 @@ export const appConfig: ApplicationConfig = {
       serializer: CustomSerializer,
     }),
     provideStoreDevtools(),
+    provideHotToastConfig(),
   ],
 };
