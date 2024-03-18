@@ -1,4 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 import {
   CreateExpenseDto,
@@ -12,7 +15,7 @@ import { ExpenseRepository } from './repositories';
 @Injectable()
 export class ExpenseDrivenAdapter implements ExpenseDrivenPort {
   constructor(
-    @Inject(ExpenseRepository)
+    @InjectRepository(ExpenseRepository)
     private readonly expenseRepository: ExpenseRepository
   ) {}
 
@@ -20,16 +23,20 @@ export class ExpenseDrivenAdapter implements ExpenseDrivenPort {
     return this.expenseRepository.save(expense);
   }
 
-  updateExpense(id: number, expense: UpdateExpenseDto): Promise<Expense> {
+  updateExpense(id: number, expense: UpdateExpenseDto): Promise<UpdateResult> {
     return this.expenseRepository.update(id, expense);
   }
 
-  deleteExpense(id: number): Promise<number> {
+  deleteExpense(id: number): Promise<DeleteResult> {
     return this.expenseRepository.delete(id);
   }
 
   getExpense(id: number): Promise<Expense | null> {
-    return this.expenseRepository.findOne(id);
+    return this.expenseRepository.findOne({
+      where: {
+        id,
+      },
+    });
   }
 
   getExpenses(): Promise<Expense[]> {

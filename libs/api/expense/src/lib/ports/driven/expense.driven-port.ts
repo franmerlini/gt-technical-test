@@ -1,3 +1,5 @@
+import { DeleteResult, UpdateResult } from 'typeorm';
+
 import {
   CreateExpenseDto,
   Expense,
@@ -6,8 +8,8 @@ import {
 
 export interface ExpenseDrivenPort {
   createExpense(expense: CreateExpenseDto): Promise<Expense>;
-  updateExpense(id: number, expense: UpdateExpenseDto): Promise<Expense>;
-  deleteExpense(id: number): Promise<number>;
+  updateExpense(id: number, expense: UpdateExpenseDto): Promise<UpdateResult>;
+  deleteExpense(id: number): Promise<DeleteResult>;
   getExpense(id: number): Promise<Expense | null>;
   getExpenses(): Promise<Expense[]>;
 }

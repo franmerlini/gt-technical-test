@@ -21,12 +21,12 @@ export class ExpenseService implements ExpenseDriverPort {
   }
 
   async updateExpense(id: number, expense: UpdateExpenseDto): Promise<Expense> {
-    const updatedExpense = await this.expenseDrivenPort.updateExpense(
+    const { affected } = await this.expenseDrivenPort.updateExpense(
       id,
       expense
     );
 
-    if (!updatedExpense) {
+    if (affected === 0) {
       throw new NotFoundException(`Expense with ID ${id} doesn't exist.`);
     }
 
