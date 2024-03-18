@@ -32,14 +32,17 @@ export class ExpenseDrivenAdapter implements ExpenseDrivenPort {
   }
 
   getExpense(id: number): Promise<Expense | null> {
-    return this.expenseRepository.findOne({
-      where: {
-        id,
-      },
-    });
+    return this.expenseRepository
+      .createQueryBuilder('expense')
+      .leftJoinAndSelect('expense.category', 'category')
+      .where('expense.id = :id', { id })
+      .getOne();
   }
 
   getExpenses(): Promise<Expense[]> {
-    return this.expenseRepository.find();
+    return this.expenseRepository
+      .createQueryBuilder('expense')
+      .leftJoinAndSelect('expense.category', 'category')
+      .getMany();
   }
 }
