@@ -6,10 +6,8 @@ import { Category, Expense } from '@gt-technical-test/libs/common';
 import {
   CategoryController,
   CategoryDrivenAdapter,
-  CategoryRepository,
   ExpenseController,
   ExpenseDrivenAdapter,
-  ExpenseRepository,
 } from './adapters';
 import { CategoryService, ExpenseService } from './domain';
 
@@ -19,10 +17,8 @@ import { CategoryService, ExpenseService } from './domain';
   providers: [
     ExpenseService,
     ExpenseDrivenAdapter,
-    ExpenseRepository,
     CategoryService,
     CategoryDrivenAdapter,
-    CategoryRepository,
   ],
   exports: [ExpenseService, CategoryService],
 })
