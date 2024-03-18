@@ -9,7 +9,7 @@ import { CategoryRepository } from './repositories';
 @Injectable()
 export class CategoryDrivenAdapter implements CategoryDrivenPort {
   constructor(
-    @InjectRepository(CategoryRepository)
+    @InjectRepository(Category)
     private readonly categoryRepository: CategoryRepository
   ) {}
 

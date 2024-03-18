@@ -15,7 +15,7 @@ import { ExpenseRepository } from './repositories';
 @Injectable()
 export class ExpenseDrivenAdapter implements ExpenseDrivenPort {
   constructor(
-    @InjectRepository(ExpenseRepository)
+    @InjectRepository(Expense)
     private readonly expenseRepository: ExpenseRepository
   ) {}
 
