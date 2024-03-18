@@ -28,8 +28,7 @@ export class ToastService {
 
   error(message: string): void {
     this.toast.error(message, {
-      autoClose: false,
-      dismissible: true,
+      duration: 3000,
     });
   }
 }
