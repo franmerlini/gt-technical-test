@@ -1,12 +1,13 @@
-import { AbstractControl, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 export class CustomValidators {
-  static passwordMatchingValidator(password: FormControl<string>, confirmPassword: FormControl<string>): ValidatorFn {
-    return () =>
-      password && confirmPassword && password.value === confirmPassword.value ? null : { notmatched: true };
-  }
-
   static requiredSelectValidator(control: AbstractControl): ValidationErrors | null {
     return !control?.value ? { required: true } : null;
+  }
+
+  static rationalTwoDecimalsValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control?.value;
+    const regex = /^\d+(\.\d{1,2})?$/;
+    return !regex.test(value) ? { rationaltwodecimals: true } : null;
   }
 }

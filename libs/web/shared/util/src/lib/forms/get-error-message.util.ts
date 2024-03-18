@@ -1,15 +1,13 @@
 import { FormControl, ValidationErrors } from '@angular/forms';
 
-const createErrorMessage = (
-  errorKey: string,
-  validationErrors: ValidationErrors
-): string => {
+const createErrorMessage = (errorKey: string, validationErrors: ValidationErrors): string => {
   const ERROR_MESSAGES: Record<string, string> = {
     required: 'The field is required.',
     maxlength: `The field must be less than ${validationErrors['requiredLength']} characters.`,
     minlength: `The field must be at least ${validationErrors['requiredLength']} characters long.`,
     min: `The field must be greater than ${validationErrors['min']}.`,
     max: `The field must be less than ${validationErrors['max']}.`,
+    rationaltwodecimals: 'The field must be a number with up to two decimal places.',
   };
   return ERROR_MESSAGES[errorKey];
 };
