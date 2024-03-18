@@ -1,7 +1,6 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
-import { join } from 'path';
+import { Category, Expense } from '@gt-technical-test/libs/common';
 
 import { databaseConfig } from './database.config';
 
@@ -16,15 +15,8 @@ export const dataSourceOptions: DataSourceOptions = {
   username,
   password,
   database,
-  entities: [
-    join(__dirname, '../../../../../common/src/lib/models/*.model{.ts,.js}'),
-  ],
-  // entities: [Expense, Category],
-  migrations: [join(__dirname, '../../../migrations/*{.ts,.js}')],
-  synchronize: true,
-  migrationsRun: true,
+  entities: [Expense, Category],
   logging: false,
-  namingStrategy: new SnakeNamingStrategy(),
 };
 
 export const dataSource = new DataSource(dataSourceOptions);
