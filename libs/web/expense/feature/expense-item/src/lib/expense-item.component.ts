@@ -8,6 +8,7 @@ import { combineLatest, map } from 'rxjs';
 import { CreateExpenseDto, UpdateExpenseDto } from '@gt-technical-test/libs/common';
 import { CategoryFeature, ExpenseActions, ExpenseFeature } from '@gt-technical-test/libs/web/expense/data-access/store';
 import { ExpenseFormComponent } from '@gt-technical-test/libs/web/expense/ui/expense-form';
+import { ToastActions } from '@gt-technical-test/libs/web/shared/data-access/store';
 
 @Component({
   selector: 'gt-expense-item',
@@ -49,7 +50,7 @@ export class ExpenseItemComponent {
     this.#store.dispatch(ExpenseActions.updateExpense({ expense }));
   }
 
-  onFormError(error: string) {
-    console.log(error);
+  onFormError(message: string) {
+    this.#store.dispatch(ToastActions.toastError({ message }));
   }
 }
