@@ -49,7 +49,7 @@ export class ExpenseController {
   }
 
   @Delete(':id')
-  deleteExpense(@Param('id') id: number): Promise<void> {
+  deleteExpense(@Param('id') id: number): Promise<number> {
     return this.expenseDriverPort.deleteExpense(id);
   }
 }

@@ -33,14 +33,14 @@ export class ExpenseService implements ExpenseDriverPort {
     return this.expenseDrivenPort.getExpense(id) as Promise<Expense>;
   }
 
-  async deleteExpense(id: number): Promise<void> {
-    const existsExpense = await this.expenseDrivenPort.getExpense(id);
+  async deleteExpense(id: number): Promise<number> {
+    const { affected } = await this.expenseDrivenPort.deleteExpense(id);
 
-    if (!existsExpense) {
+    if (affected === 0) {
       throw new NotFoundException(`Expense with ID ${id} doesn't exist.`);
     }
 
-    this.expenseDrivenPort.deleteExpense(id);
+    return id;
   }
 
   async getExpense(id: number): Promise<Expense> {
