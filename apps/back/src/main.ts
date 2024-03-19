@@ -2,12 +2,7 @@ import { ClassSerializerInterceptor, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 
-import {
-  AppConfigKeys,
-  HttpExceptionFilter,
-  cors,
-  validationPipe,
-} from '@gt-technical-test/libs/api/core';
+import { AppConfigKeys, HttpExceptionFilter, cors, logger, validationPipe } from '@gt-technical-test/libs/api/core';
 
 import { AppModule } from './app/app.module';
 
@@ -26,12 +21,11 @@ async function bootstrap() {
   app.useGlobalPipes(validationPipe);
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector));
+  app.use(logger);
 
   await app.listen(port);
 
-  Logger.log(
-    `🚀 Application is running on: ${protocol}://${host}:${port}/${apiPrefix}`
-  );
+  Logger.log(`🚀 Application is running on: ${protocol}://${host}:${port}/${apiPrefix}`);
 }
 
 bootstrap();
