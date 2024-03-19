@@ -1,10 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 
-import {
-  CreateExpenseDto,
-  Expense,
-  UpdateExpenseDto,
-} from '@gt-technical-test/libs/common';
+import { CreateExpenseDto, Expense, UpdateExpenseDto } from '@gt-technical-test/libs/common';
 
 import { ExpenseDrivenAdapter } from '../../adapters';
 import { ExpenseDrivenPort, ExpenseDriverPort } from '../../ports';
@@ -21,10 +17,7 @@ export class ExpenseService implements ExpenseDriverPort {
   }
 
   async updateExpense(id: number, expense: UpdateExpenseDto): Promise<Expense> {
-    const { affected } = await this.expenseDrivenPort.updateExpense(
-      id,
-      expense
-    );
+    const { affected } = await this.expenseDrivenPort.updateExpense(id, expense);
 
     if (affected === 0) {
       throw new NotFoundException(`Expense with ID ${id} doesn't exist.`);
@@ -54,12 +47,6 @@ export class ExpenseService implements ExpenseDriverPort {
   }
 
   async getExpenses(): Promise<Expense[]> {
-    const expenses = await this.expenseDrivenPort.getExpenses();
-
-    if (expenses.length === 0) {
-      throw new NotFoundException(`No expenses found.`);
-    }
-
-    return expenses;
+    return this.expenseDrivenPort.getExpenses();
   }
 }
