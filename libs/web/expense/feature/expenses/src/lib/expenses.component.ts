@@ -4,10 +4,7 @@ import { RouterLink } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 
-import {
-  ExpenseActions,
-  ExpenseFeature,
-} from '@gt-technical-test/libs/web/expense/data-access/store';
+import { ExpenseActions, ExpenseFeature } from '@gt-technical-test/libs/web/expense/data-access/store';
 import { ExpensesTableComponent } from '@gt-technical-test/libs/web/expense/ui/expenses-table';
 import { RouterActions } from '@gt-technical-test/libs/web/shared/data-access/store';
 
@@ -17,40 +14,33 @@ import { RouterActions } from '@gt-technical-test/libs/web/shared/data-access/st
   imports: [RouterLink, ExpensesTableComponent, AsyncPipe],
   template: `
     <div class="flex flex-col gap-4">
-      <div class="flex justify-between items-center">
-        <h1 class="text-2xl">Expenses tracker</h1>
-        <button class="btn btn-primary" routerLink="new">
-          New expense
-          <svg
-            class="w-5 h-5"
-            stroke-linejoin="round"
-            viewBox="0 0 16 16"
-            style="color: currentcolor;"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M8.75 1.75V1H7.25V1.75V6.75H2.25H1.5V8.25H2.25H7.25V13.25V14H8.75V13.25V8.25H13.75H14.5V6.75H13.75H8.75V1.75Z"
-              fill="currentColor"
-            ></path>
-          </svg>
-        </button>
+      <div class="flex flex-col">
+        <div class="text-xl breadcrumbs">
+          <ul>
+            <li>Expenses</li>
+          </ul>
+        </div>
+
+        <div class="flex justify-end">
+          <button class="btn btn-primary" routerLink="new">
+            New expense
+            <svg class="w-5 h-5" stroke-linejoin="round" viewBox="0 0 16 16" style="color: currentcolor;">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M8.75 1.75V1H7.25V1.75V6.75H2.25H1.5V8.25H2.25H7.25V13.25V14H8.75V13.25V8.25H13.75H14.5V6.75H13.75H8.75V1.75Z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </button>
+        </div>
       </div>
 
       @if(expenses$ | async; as expenses) { @if(expenses.length) {
-      <gt-expenses-table
-        [expenses]="expenses"
-        (edit)="onEdit($event)"
-        (delete)="onDelete($event)"
-      ></gt-expenses-table>
+      <gt-expenses-table [expenses]="expenses" (edit)="onEdit($event)" (delete)="onDelete($event)"></gt-expenses-table>
       } @else {
       <div role="alert" class="alert alert-info">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          class="stroke-current shrink-0 w-6 h-6"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
           <path
             stroke-linecap="round"
             stroke-linejoin="round"

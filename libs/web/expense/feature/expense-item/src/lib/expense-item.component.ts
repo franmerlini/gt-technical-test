@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { combineLatest, map } from 'rxjs';
 
+import { RouterLink } from '@angular/router';
 import { CreateExpenseDto, UpdateExpenseDto } from '@gt-technical-test/libs/common';
 import { CategoryFeature, ExpenseActions, ExpenseFeature } from '@gt-technical-test/libs/web/expense/data-access/store';
 import { ExpenseFormComponent } from '@gt-technical-test/libs/web/expense/ui/expense-form';
@@ -13,9 +14,14 @@ import { ToastActions } from '@gt-technical-test/libs/web/shared/data-access/sto
 @Component({
   selector: 'gt-expense-item',
   standalone: true,
-  imports: [ExpenseFormComponent, AsyncPipe],
+  imports: [ExpenseFormComponent, AsyncPipe, RouterLink],
   template: `
-    <h1 class="text-2xl">{{ (expense$ | async) ? 'Edit expense' : 'Add expense' }}</h1>
+    <div class="text-xl breadcrumbs">
+      <ul>
+        <li><a routerLink="/expenses">Expenses</a></li>
+        <li>{{ (expense$ | async) ? 'Edit expense' : 'Add expense' }}</li>
+      </ul>
+    </div>
 
     @if(data$ | async; as data ) {
     <div class="mt-4">
