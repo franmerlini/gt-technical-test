@@ -12,18 +12,25 @@
         "jestConfig": "libs/api/database/jest.config.ts"
       }
     },
+    "docker-compose:up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/api/database",
+        "command": "docker-compose up -d"
+      }
+    },
     "migration:generate": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/api/database",
-        "command": "typeorm-ts-node-commonjs -d ./src/lib/config/data-source.config.ts migration:generate ./migrations/init"
+        "command": "npx typeorm-ts-node-commonjs -d ./src/lib/config/data-source.config.ts migration:generate ./migrations/init"
       }
     },
     "migration:run": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/api/database",
-        "command": "typeorm-ts-node-commonjs -d ./src/lib/config/data-source.config.ts migration:run"
+        "command": "npx typeorm-ts-node-commonjs -d ./src/lib/config/data-source.config.ts migration:run"
       }
     }
   }
