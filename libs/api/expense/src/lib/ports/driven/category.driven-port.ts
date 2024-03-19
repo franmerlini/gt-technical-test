@@ -1,5 +1,5 @@
-import { Category } from '@gt-technical-test/libs/common';
+import { CategoryEntity } from '@gt-technical-test/libs/api/database';
 
 export interface CategoryDrivenPort {
-  getCategories(): Promise<Category[]>;
+  getCategories(): Promise<CategoryEntity[]>;
 }

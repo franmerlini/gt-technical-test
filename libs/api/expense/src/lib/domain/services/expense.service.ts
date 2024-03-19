@@ -1,6 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 
-import { CreateExpenseDto, Expense, UpdateExpenseDto } from '@gt-technical-test/libs/common';
+import { ExpenseEntity } from '@gt-technical-test/libs/api/database';
+import { CreateExpenseDto, UpdateExpenseDto } from '@gt-technical-test/libs/common';
 
 import { ExpenseDrivenAdapter } from '../../adapters';
 import { ExpenseDrivenPort, ExpenseDriverPort } from '../../ports';
@@ -12,18 +13,18 @@ export class ExpenseService implements ExpenseDriverPort {
     private readonly expenseDrivenPort: ExpenseDrivenPort
   ) {}
 
-  async createExpense(expense: CreateExpenseDto): Promise<Expense> {
+  async createExpense(expense: CreateExpenseDto): Promise<ExpenseEntity> {
     return this.expenseDrivenPort.createExpense(expense);
   }
 
-  async updateExpense(id: number, expense: UpdateExpenseDto): Promise<Expense> {
+  async updateExpense(id: number, expense: UpdateExpenseDto): Promise<ExpenseEntity> {
     const { affected } = await this.expenseDrivenPort.updateExpense(id, expense);
 
     if (affected === 0) {
       throw new NotFoundException(`Expense with ID ${id} doesn't exist.`);
     }
 
-    return this.expenseDrivenPort.getExpense(id) as Promise<Expense>;
+    return this.expenseDrivenPort.getExpense(id) as Promise<ExpenseEntity>;
   }
 
   async deleteExpense(id: number): Promise<number> {
@@ -36,7 +37,7 @@ export class ExpenseService implements ExpenseDriverPort {
     return id;
   }
 
-  async getExpense(id: number): Promise<Expense> {
+  async getExpense(id: number): Promise<ExpenseEntity> {
     const expense = await this.expenseDrivenPort.getExpense(id);
 
     if (!expense) {
@@ -46,7 +47,7 @@ export class ExpenseService implements ExpenseDriverPort {
     return expense;
   }
 
-  async getExpenses(): Promise<Expense[]> {
+  async getExpenses(): Promise<ExpenseEntity[]> {
     return this.expenseDrivenPort.getExpenses();
   }
 }

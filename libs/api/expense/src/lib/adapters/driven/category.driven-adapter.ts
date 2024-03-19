@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Category } from '@gt-technical-test/libs/common';
+import { CategoryEntity } from '@gt-technical-test/libs/api/database';
 
 import { CategoryDrivenPort } from '../../ports';
 import { CategoryRepository } from './repositories';
@@ -9,11 +9,11 @@ import { CategoryRepository } from './repositories';
 @Injectable()
 export class CategoryDrivenAdapter implements CategoryDrivenPort {
   constructor(
-    @InjectRepository(Category)
+    @InjectRepository(CategoryEntity)
     private readonly categoryRepository: CategoryRepository
   ) {}
 
-  getCategories(): Promise<Category[]> {
+  getCategories(): Promise<CategoryEntity[]> {
     return this.categoryRepository.find();
   }
 }

@@ -4,8 +4,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 import { join } from 'path';
 
-import { Category, Expense } from '@gt-technical-test/libs/common';
-
+import { CategoryEntity, ExpenseEntity } from '../entities';
 import { databaseConfig } from './database.config';
 
 const {
@@ -19,8 +18,9 @@ export const dataSourceOptions: DataSourceOptions = {
   username,
   password,
   database,
-  entities: [Expense, Category],
-  migrations: [join(__dirname, '../../../migrations/*{.ts,.js}')],
+  // entities: [join(__dirname, '../entities/*.entity.ts')],
+  entities: [CategoryEntity, ExpenseEntity],
+  migrations: [join(__dirname, '../../../migrations/*.ts')],
   synchronize: true,
   migrationsRun: true,
   logging: false,

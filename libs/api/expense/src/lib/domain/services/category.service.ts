@@ -1,7 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 
-import { Category } from '@gt-technical-test/libs/common';
-
+import { CategoryEntity } from '@gt-technical-test/libs/api/database';
 import { CategoryDrivenAdapter } from '../../adapters';
 import { CategoryDrivenPort, CategoryDriverPort } from '../../ports';
 
@@ -12,7 +11,7 @@ export class CategoryService implements CategoryDriverPort {
     private readonly categoryDrivenPort: CategoryDrivenPort
   ) {}
 
-  async getCategories(): Promise<Category[]> {
+  async getCategories(): Promise<CategoryEntity[]> {
     const categories = await this.categoryDrivenPort.getCategories();
 
     if (categories.length === 0) {

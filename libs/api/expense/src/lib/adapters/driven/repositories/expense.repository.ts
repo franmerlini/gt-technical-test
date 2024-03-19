@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 
 import { DataSource, Repository } from 'typeorm';
 
-import { Expense } from '@gt-technical-test/libs/common';
+import { ExpenseEntity } from '@gt-technical-test/libs/api/database';
 
 @Injectable()
-export class ExpenseRepository extends Repository<Expense> {
+export class ExpenseRepository extends Repository<ExpenseEntity> {
   constructor(private readonly dataSource: DataSource) {
-    super(Expense, dataSource.createEntityManager());
+    super(ExpenseEntity, dataSource.createEntityManager());
   }
 }

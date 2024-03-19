@@ -3,11 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { DeleteResult, UpdateResult } from 'typeorm';
 
-import {
-  CreateExpenseDto,
-  Expense,
-  UpdateExpenseDto,
-} from '@gt-technical-test/libs/common';
+import { ExpenseEntity } from '@gt-technical-test/libs/api/database';
+import { CreateExpenseDto, UpdateExpenseDto } from '@gt-technical-test/libs/common';
 
 import { ExpenseDrivenPort } from '../../ports';
 import { ExpenseRepository } from './repositories';
@@ -15,11 +12,11 @@ import { ExpenseRepository } from './repositories';
 @Injectable()
 export class ExpenseDrivenAdapter implements ExpenseDrivenPort {
   constructor(
-    @InjectRepository(Expense)
+    @InjectRepository(ExpenseEntity)
     private readonly expenseRepository: ExpenseRepository
   ) {}
 
-  createExpense(expense: CreateExpenseDto): Promise<Expense> {
+  createExpense(expense: CreateExpenseDto): Promise<ExpenseEntity> {
     return this.expenseRepository.save(expense);
   }
 
@@ -31,7 +28,7 @@ export class ExpenseDrivenAdapter implements ExpenseDrivenPort {
     return this.expenseRepository.delete(id);
   }
 
-  getExpense(id: number): Promise<Expense | null> {
+  getExpense(id: number): Promise<ExpenseEntity | null> {
     return this.expenseRepository
       .createQueryBuilder('expense')
       .leftJoinAndSelect('expense.category', 'category')
@@ -39,7 +36,7 @@ export class ExpenseDrivenAdapter implements ExpenseDrivenPort {
       .getOne();
   }
 
-  getExpenses(): Promise<Expense[]> {
+  getExpenses(): Promise<ExpenseEntity[]> {
     return this.expenseRepository
       .createQueryBuilder('expense')
       .leftJoinAndSelect('expense.category', 'category')

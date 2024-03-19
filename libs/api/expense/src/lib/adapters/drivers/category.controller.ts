@@ -1,6 +1,6 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 
-import { Category } from '@gt-technical-test/libs/common';
+import { CategoryEntity } from '@gt-technical-test/libs/api/database';
 
 import { CategoryService } from '../../domain';
 import { CategoryDriverPort } from '../../ports';
@@ -13,7 +13,7 @@ export class CategoryController {
   ) {}
 
   @Get()
-  getCategories(): Promise<Category[]> {
+  getCategories(): Promise<CategoryEntity[]> {
     return this.expenseDriverPort.getCategories();
   }
 }

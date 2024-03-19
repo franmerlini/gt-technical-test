@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 
 import { DataSource, Repository } from 'typeorm';
 
-import { Category } from '@gt-technical-test/libs/common';
+import { CategoryEntity } from '@gt-technical-test/libs/api/database';
 
 @Injectable()
-export class CategoryRepository extends Repository<Category> {
+export class CategoryRepository extends Repository<CategoryEntity> {
   constructor(private readonly dataSource: DataSource) {
-    super(Category, dataSource.createEntityManager());
+    super(CategoryEntity, dataSource.createEntityManager());
   }
 }
