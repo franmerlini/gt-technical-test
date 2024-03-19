@@ -7,10 +7,10 @@ declare namespace NodeJS {
     NX_API_PREFIX: string;
 
     // DB
-    NX_DB_PORT: string;
     NX_DB_HOST: string;
-    NX_DB_DATABASE: string;
-    NX_DB_USER: string;
+    NX_DB_PORT: string;
+    NX_DB_USERNAME: string;
     NX_DB_PASSWORD: string;
+    NX_DB_NAME: string;
   }
 }
