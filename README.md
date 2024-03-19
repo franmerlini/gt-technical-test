@@ -26,7 +26,7 @@
 - Backend
   - NestJS
   - TypeORM
-  - PostgreSQL
+  - MySQL
 
 ## Justificación de decisiones tomadas en cada requerimiento
 
